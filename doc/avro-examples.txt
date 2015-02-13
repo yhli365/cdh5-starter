@@ -1,0 +1,14 @@
+
+--)map/reduce example
+#)share.lib
+$ hdfs dfs -mkdir -p /share/lib
+$ hdfs dfs -put ~/tools/avro-mapred-1.7.6-cdh5.2.0.jar /share/lib
+
+#)MapReduceColorCount
+$ hadoop jar cdh5-starter-*.jar example.avro.GenerateData
+$ java -jar ~/tools/avro-tools-*.jar tojson target/users.avro
+
+$ hdfs dfs -mkdir -p /test/avro/input
+$ hdfs dfs -put target/users.avro /test/avro/input
+$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceColorCount /test/avro/input /test/avro/output
+
