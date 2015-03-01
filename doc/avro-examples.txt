@@ -1,14 +1,25 @@
+Avro
 
---)map/reduce example
+--)map/reduce examples
 #)share.lib
 $ hdfs dfs -mkdir -p /share/lib
-$ hdfs dfs -put ~/tools/avro-mapred-1.7.6-cdh5.2.0.jar /share/lib
+$ hdfs dfs -put /share/lib/avro-mapred-1.7.6-cdh5.2.0-hadoop2.jar /share/lib
+$ hdfs dfs -ls /share/lib
+
+#)MapReduceAvroWordCount
+$ hdfs dfs -mkdir -p /test/avro/input
+$ hdfs dfs -put WordCount /test/avro/input
+$ hdfs dfs -rm -r /test/avro/output/WordCount
+$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceAvroWordCount /test/avro/input/WordCount /test/avro/output/WordCount
+$ hdfs dfs -text /test/avro/output/WordCount/part-r-00000
 
 #)MapReduceColorCount
 $ hadoop jar cdh5-starter-*.jar example.avro.GenerateData
-$ java -jar ~/tools/avro-tools-*.jar tojson target/users.avro
+$ java -jar /share/lib/avro-tools-*.jar tojson target/users.avro
 
-$ hdfs dfs -mkdir -p /test/avro/input
-$ hdfs dfs -put target/users.avro /test/avro/input
-$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceColorCount /test/avro/input /test/avro/output
-
+$ hdfs dfs -mkdir -p /test/avro/input/ColorCount
+$ hdfs dfs -put target/users.avro /test/avro/input/ColorCount
+$ hdfs dfs -rm -r /test/avro/output/ColorCount
+$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceColorCount /test/avro/input/ColorCount /test/avro/output/ColorCount
+$ hdfs dfs -get /test/avro/output/ColorCount/part-r-00000.avro ColorCount.avro
+$ java -jar /share/lib/avro-tools-*.jar tojson ColorCount.avro

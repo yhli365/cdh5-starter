@@ -40,12 +40,13 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
-
-import example.util.HadoopToolRunner;
+import org.apache.hadoop.util.ToolRunner;
 
 /**
  * The classic WordCount example modified to output Avro Pair<CharSequence,
  * Integer> records instead of text.
+ * 
+ * @link http://avro.apache.org/docs/current/mr.html
  */
 public class MapReduceAvroWordCount extends Configured implements Tool {
 
@@ -119,7 +120,7 @@ public class MapReduceAvroWordCount extends Configured implements Tool {
 	}
 
 	public static void main(String[] args) throws Exception {
-		int res = HadoopToolRunner.run(new Configuration(),
+		int res = ToolRunner.run(new Configuration(),
 				new MapReduceAvroWordCount(), args);
 		System.exit(res);
 	}

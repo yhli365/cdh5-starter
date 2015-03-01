@@ -37,9 +37,16 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
-import example.util.HadoopToolRunner;
-
+/**
+ * ColorCount reads in data files containing User records, defined in
+ * examples/user.avsc, and counts the number of instances of each favorite
+ * color. (This example draws inspiration from the canonical WordCount MapReduce
+ * application.)
+ * 
+ * @link http://avro.apache.org/docs/current/mr.html
+ */
 public class MapReduceColorCount extends Configured implements Tool {
 
 	public static class ColorCountMapper extends
@@ -103,7 +110,7 @@ public class MapReduceColorCount extends Configured implements Tool {
 	}
 
 	public static void main(String[] args) throws Exception {
-		int res = HadoopToolRunner.run(new MapReduceColorCount(), args);
+		int res = ToolRunner.run(new MapReduceColorCount(), args);
 		System.exit(res);
 	}
 
