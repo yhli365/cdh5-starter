@@ -22,6 +22,14 @@ import org.apache.hadoop.util.GenericOptionsParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 基于hadoop命令功能扩展.<br/>
+ * hadoop jar x.jar mainClass arg1 arg2... <br/>
+ * 1)实现hdfs、local jars自动加载, 通过将第三方jar放在本地与hdfs指定目录下，不用打包到jar中，方便远程调试.<br/>
+ * 
+ * @author yhli
+ * 
+ */
 public class ExampleAppDriver {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ExampleAppDriver.class);

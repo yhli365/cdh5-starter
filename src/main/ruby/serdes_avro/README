@@ -1,0 +1,19 @@
+--)Gems(avro)
+#)install.remote
+$ gem list --local avro
+$ gem list --remote avro
+$ gem install avro
+Fetching: multi_json-1.10.1.gem (100%)
+Fetching: avro-1.7.7.gem (100%)
+Successfully installed multi_json-1.10.1
+Successfully installed avro-1.7.7
+2 gems installed
+
+--)Run
+First run the server as:
+
+ruby -r 'rubygems' ./sample_ipc_server.rb
+
+Then run the client as:
+
+ruby -r 'rubygems' ./sample_ipc_client.rb avro_user pat Hello_World

@@ -1,0 +1,32 @@
+--)Install Python Package: avro
+#)download: avro-1.7.7.tar.gz
+https://pypi.python.org/pypi
+
+#)install
+[root@ys0 install]# tar -xzf avro-1.7.7.tar.gz 
+[root@ys0 install]# cd avro-1.7.7
+[root@ys0 avro-1.7.7]# python setup.py --help
+[root@ys0 avro-1.7.7]# python setup.py --fullname --description
+[root@ys0 avro-1.7.7]# sudo python setup.py install
+
+#)check
+[yhli@ys0 ~]# python -V
+Python 2.6.6
+[yhli@ys0 ~]$ python
+>>> import avro.schema as schema
+>>> help(schema)
+FILE
+    /usr/lib/python2.6/site-packages/avro-1.7.7-py2.6.egg/avro/schema.py
+>>> exit()
+
+--)Run
+chmod +x *.py
+
+First run the server as:
+
+./start_server.py
+
+Then run the client as:
+
+./send_message.py avro_user pat Hello_World
+
