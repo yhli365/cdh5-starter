@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -107,6 +108,14 @@ public class ExampleAppDriver {
 		// LOG.info("addHdfsClassPath# {}", cpath);
 		FileSystem fs = FileSystem.get(conf);
 		Path rootdir = new Path(cpath);
+		try {
+			if (!fs.exists(rootdir) || !fs.isDirectory(rootdir)) {
+				return true;
+			}
+		} catch (ConnectException e) {
+			return true;
+		}
+
 		Stack<Path> stack = new Stack<Path>();
 		stack.push(rootdir);
 		int count = 0;
