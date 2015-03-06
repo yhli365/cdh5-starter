@@ -250,7 +250,7 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 							<addClasspath>false</addClasspath>
-							<mainClass>example.ExampleAppDriver</mainClass>
+							<mainClass>util.HadoopAppDriver</mainClass>
 						</manifest>
 						<manifestSections>
 							<manifestSection>

@@ -1,4 +1,4 @@
-package example;
+package util;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +31,9 @@ import org.slf4j.LoggerFactory;
  * @author yhli
  * 
  */
-public class ExampleAppDriver {
+public class HadoopAppDriver {
 	private static final Logger LOG = LoggerFactory
-			.getLogger(ExampleAppDriver.class);
+			.getLogger(HadoopAppDriver.class);
 
 	public static void main(String args[]) {
 		int exitCode = -1;
