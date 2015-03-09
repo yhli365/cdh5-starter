@@ -318,7 +318,7 @@
 							<target>
 								<echo message="compile-protoc..." />
 								<path id="proto.path">
-									<fileset dir="src/main/proto">
+									<fileset dir="src/main/resources/schema/proto">
 										<include name="**/*.proto" />
 									</fileset>
 								</path>
@@ -332,7 +332,7 @@
 								<mkdir dir="target/gen-java" />
 								<exec executable="protoc-${protobuf.version}.exe">
 									<arg line="--java_out=target/gen-java" />
-									<arg line="-I${project.basedir}/src/main/proto" />
+									<arg line="-I${project.basedir}/src/main/resources/schema/proto" />
 									<arg line="${proto.files}" />
 								</exec>
 							</target>
@@ -359,7 +359,7 @@
 							<goal>idl-protocol</goal>
 						</goals>
 						<configuration>
-							<sourceDirectory>${project.basedir}/src/main/avro</sourceDirectory>
+							<sourceDirectory>${project.basedir}/src/main/resources/schema/avro</sourceDirectory>
 							<outputDirectory>${gen.java.dir}</outputDirectory>
 						</configuration>
 					</execution>
