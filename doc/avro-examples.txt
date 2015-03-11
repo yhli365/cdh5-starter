@@ -17,44 +17,44 @@ $ hdfs dfs -put /share/lib/avro-mapred-1.7.6-cdh5.2.0-hadoop2.jar /share/lib
 $ hdfs dfs -ls /share/lib
 
 #)MapReduceAvroWordCount
-$ hdfs dfs -mkdir -p /test/avro/input
-$ hdfs dfs -put WordCount /test/avro/input
-$ hdfs dfs -rm -r /test/avro/output/WordCount
-$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceAvroWordCount /test/avro/input/WordCount /test/avro/output/WordCount
-$ hdfs dfs -text /test/avro/output/WordCount/part-r-00000
+$ hdfs dfs -mkdir -p /yhli/avro/input
+$ hdfs dfs -put WordCount /yhli/avro/input
+$ hdfs dfs -rm -r /yhli/avro/output/WordCount
+$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceAvroWordCount /yhli/avro/input/WordCount /yhli/avro/output/WordCount
+$ hdfs dfs -text /yhli/avro/output/WordCount/part-r-00000
 
 #)MapReduceColorCount
 $ hadoop jar cdh5-starter-*.jar example.avro.GenerateData
 $ java -jar /share/lib/avro-tools-*.jar tojson target/users.avro
 
-$ hdfs dfs -mkdir -p /test/avro/input/ColorCount
-$ hdfs dfs -put target/users.avro /test/avro/input/ColorCount
-$ hdfs dfs -rm -r /test/avro/output/ColorCount
-$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceColorCount /test/avro/input/ColorCount /test/avro/output/ColorCount
-$ hdfs dfs -get /test/avro/output/ColorCount/part-r-00000.avro ColorCount.avro
+$ hdfs dfs -mkdir -p /yhli/avro/input/ColorCount
+$ hdfs dfs -put target/users.avro /yhli/avro/input/ColorCount
+$ hdfs dfs -rm -r /yhli/avro/output/ColorCount
+$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceColorCount /yhli/avro/input/ColorCount /yhli/avro/output/ColorCount
+$ hdfs dfs -get /yhli/avro/output/ColorCount/part-r-00000.avro ColorCount.avro
 $ java -jar /share/lib/avro-tools-*.jar tojson ColorCount.avro
 
 #)MapReduceColorCount2(AvroSequenceFile)
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.seqfile /test/avro/input/ColorCount2/users.snappy
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text /test/avro/input/ColorCount2/users.snappy
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.user /test/avro/input/ColorCount2/users.snappy
-$ hdfs dfs -get /test/avro/input/ColorCount2/users.snappy target/
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.seqfile /yhli/avro/input/ColorCount2/users.snappy
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text /yhli/avro/input/ColorCount2/users.snappy
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.user /yhli/avro/input/ColorCount2/users.snappy
+$ hdfs dfs -get /yhli/avro/input/ColorCount2/users.snappy target/
 
-$ hdfs dfs -rm -r /test/avro/output/ColorCount2
-$ hadoop jar cdh5-starter-*.jar avro.MapReduceColorCount2 /test/avro/input/ColorCount2 /test/avro/output/ColorCount2
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=1 -Dlen=20 -text /test/avro/output/ColorCount2/part-r-00000
+$ hdfs dfs -rm -r /yhli/avro/output/ColorCount2
+$ hadoop jar cdh5-starter-*.jar avro.MapReduceColorCount2 /yhli/avro/input/ColorCount2 /yhli/avro/output/ColorCount2
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=1 -Dlen=20 -text /yhli/avro/output/ColorCount2/part-r-00000
 
-#)AvroFile
+#)AvroFile(各种压缩算法都可以在MapReduce执行时正确split)
 $ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=null -Dsize=1000 -gen.avrofile target/users.avro
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.avrofile target/users.avro.snappy
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=deflate -Dsize=1000 -gen.avrofile target/users.avro.deflate
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=bzip2 -Dsize=1000 -gen.avrofile target/users.avro.bzip2
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=xz -Dsize=1000 -gen.avrofile target/users.avro.xz
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.avrofile target/users.avro.snappy
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.avrofile target/users.snappy.avro
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=deflate -Dsize=1000 -gen.avrofile target/users.deflate.avro
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=bzip2 -Dsize=1000 -gen.avrofile target/users.bzip2.avro
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=xz -Dsize=1000 -gen.avrofile target/users.xz.avro
+$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.avrofile target/users.snappy.avro
 
-#)Hive(AvroFile)
-$ hdfs dfs -mkdir -p /test/avro/schema
-$ hdfs dfs -put user.avsc /test/avro/schema
+#)Hive(AvroFile:文件扩展名必须是.avro时hive才能正确split进行map数计算)
+$ hdfs dfs -mkdir -p /yhli/avro/schema
+$ hdfs dfs -put user.avsc /yhli/avro/schema
 $ $HIVE_HOME/bin/hive
 hive> drop table if exists avro_user;
 hive> CREATE TABLE avro_user
@@ -62,12 +62,13 @@ ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
 STORED AS 
 INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
 OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
-TBLPROPERTIES ('avro.schema.url'='hdfs:///test/avro/schema/user.avsc');
+TBLPROPERTIES ('avro.schema.url'='hdfs:///yhli/avro/schema/user.avsc');
 hive> describe avro_user;
-hive> LOAD DATA LOCAL INPATH 'target/users.avro.snappy' OVERWRITE INTO TABLE avro_user;
+
+hive> LOAD DATA LOCAL INPATH 'target/users.snappy.avro' OVERWRITE INTO TABLE avro_user;
 hive> select * from avro_user limit 10;
 hive> select favorite_color, count(*) from avro_user group by favorite_color;
 
-hive> LOAD DATA LOCAL INPATH 'target/users.avro.bzip2' OVERWRITE INTO TABLE avro_user;
+hive> LOAD DATA LOCAL INPATH 'target/users.bzip2.avro' OVERWRITE INTO TABLE avro_user;
 hive> select * from avro_user limit 10;
 hive> select favorite_color, count(*) from avro_user group by favorite_color;
