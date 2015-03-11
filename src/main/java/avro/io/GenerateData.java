@@ -1,4 +1,4 @@
-package example.avro;
+package avro.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +7,8 @@ import java.util.Random;
 import org.apache.avro.file.DataFileWriter;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.specific.SpecificDatumWriter;
+
+import example.avro.User;
 
 public class GenerateData {
 	public static final String[] COLORS = { "red", "orange", "yellow", "green",

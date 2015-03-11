@@ -1,16 +1,13 @@
 Avro
 http://avro.apache.org/
 
---)serdes
-#)basic
+--)SerDe
 serdes.avro.AvroWithCodeGenerationSerDesTest
 serdes.avro.AvroWithoutCodeGenerationSerDesTest
 serdes.avro.AvroRPCTest
-
-#)schema
 serdes.avro.AvroDataSchemaTest
 
---)map/reduce examples
+--)Hadoop
 #)share.lib
 $ hdfs dfs -mkdir -p /share/lib
 $ hdfs dfs -put /share/lib/avro-mapred-1.7.6-cdh5.2.0-hadoop2.jar /share/lib
@@ -20,39 +17,40 @@ $ hdfs dfs -ls /share/lib
 $ hdfs dfs -mkdir -p /yhli/avro/input
 $ hdfs dfs -put WordCount /yhli/avro/input
 $ hdfs dfs -rm -r /yhli/avro/output/WordCount
-$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceAvroWordCount /yhli/avro/input/WordCount /yhli/avro/output/WordCount
+$ hadoop jar cdh5-starter-*.jar avro.mr.MapReduceAvroWordCount /yhli/avro/input/WordCount /yhli/avro/output/WordCount
 $ hdfs dfs -text /yhli/avro/output/WordCount/part-r-00000
 
 #)MapReduceColorCount
-$ hadoop jar cdh5-starter-*.jar example.avro.GenerateData
+$ hadoop jar cdh5-starter-*.jar avro.io.GenerateData
 $ java -jar /share/lib/avro-tools-*.jar tojson target/users.avro
 
 $ hdfs dfs -mkdir -p /yhli/avro/input/ColorCount
 $ hdfs dfs -put target/users.avro /yhli/avro/input/ColorCount
 $ hdfs dfs -rm -r /yhli/avro/output/ColorCount
-$ hadoop jar cdh5-starter-*.jar example.avro.MapReduceColorCount /yhli/avro/input/ColorCount /yhli/avro/output/ColorCount
+$ hadoop jar cdh5-starter-*.jar avro.mr.MapReduceColorCount /yhli/avro/input/ColorCount /yhli/avro/output/ColorCount
 $ hdfs dfs -get /yhli/avro/output/ColorCount/part-r-00000.avro ColorCount.avro
 $ java -jar /share/lib/avro-tools-*.jar tojson ColorCount.avro
 
 #)MapReduceColorCount2(AvroSequenceFile)
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.seqfile /yhli/avro/input/ColorCount2/users.snappy
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text /yhli/avro/input/ColorCount2/users.snappy
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.user /yhli/avro/input/ColorCount2/users.snappy
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.seqfile /yhli/avro/input/ColorCount2/users.snappy
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Doffset=5 -Dlen=10 -text /yhli/avro/input/ColorCount2/users.snappy
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.user /yhli/avro/input/ColorCount2/users.snappy
 $ hdfs dfs -get /yhli/avro/input/ColorCount2/users.snappy target/
 
 $ hdfs dfs -rm -r /yhli/avro/output/ColorCount2
-$ hadoop jar cdh5-starter-*.jar avro.MapReduceColorCount2 /yhli/avro/input/ColorCount2 /yhli/avro/output/ColorCount2
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=1 -Dlen=20 -text /yhli/avro/output/ColorCount2/part-r-00000
+$ hadoop jar cdh5-starter-*.jar avro.mr.MapReduceColorCount2 /yhli/avro/input/ColorCount2 /yhli/avro/output/ColorCount2
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Doffset=1 -Dlen=20 -text /yhli/avro/output/ColorCount2/part-r-00000
 
-#)AvroFile(¸÷ÖÖÑ¹ËõËã·¨¶¼¿ÉÒÔÔÚMapReduceÖ´ĞĞÊ±ÕıÈ·split)
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=null -Dsize=1000 -gen.avrofile target/users.avro
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.avrofile target/users.snappy.avro
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=deflate -Dsize=1000 -gen.avrofile target/users.deflate.avro
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=bzip2 -Dsize=1000 -gen.avrofile target/users.bzip2.avro
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Dcodec=xz -Dsize=1000 -gen.avrofile target/users.xz.avro
-$ hadoop jar cdh5-starter-*.jar avro.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.avrofile target/users.snappy.avro
+#)AvroFile(å„ç§å‹ç¼©ç®—æ³•éƒ½å¯ä»¥åœ¨MapReduceæ‰§è¡Œæ—¶æ­£ç¡®split)
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Dcodec=null -Dsize=1000 -gen.avrofile target/users.avro
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Dcodec=snappy -Dsize=1000 -gen.avrofile target/users.snappy.avro
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Dcodec=deflate -Dsize=1000 -gen.avrofile target/users.deflate.avro
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Dcodec=bzip2 -Dsize=1000 -gen.avrofile target/users.bzip2.avro
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Dcodec=xz -Dsize=1000 -gen.avrofile target/users.xz.avro
+$ hadoop jar cdh5-starter-*.jar avro.io.AvroUserGenerateData -Doffset=5 -Dlen=10 -text.avrofile target/users.snappy.avro
 
-#)Hive(AvroFile:ÎÄ¼şÀ©Õ¹Ãû±ØĞëÊÇ.avroÊ±hive²ÅÄÜÕıÈ·split½øĞĞmapÊı¼ÆËã)
+--)Hive
+#)AvroFile(æ–‡ä»¶æ‰©å±•åå¿…é¡»æ˜¯.avroæ—¶hiveæ‰èƒ½æ­£ç¡®splitè¿›è¡Œmapæ•°è®¡ç®—)
 $ hdfs dfs -mkdir -p /yhli/avro/schema
 $ hdfs dfs -put user.avsc /yhli/avro/schema
 $ $HIVE_HOME/bin/hive

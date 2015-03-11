@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package example.avro;
+package avro.mr;
 
 import java.io.IOException;
 import java.util.StringTokenizer;

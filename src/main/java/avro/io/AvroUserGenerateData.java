@@ -1,4 +1,4 @@
-package avro;
+package avro.io;
 
 import java.io.File;
 import java.io.IOException;

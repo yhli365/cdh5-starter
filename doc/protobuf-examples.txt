@@ -1,0 +1,10 @@
+Protobuf
+https://github.com/google/protobuf
+
+--)SerDe
+serdes.protobuf.AddressBookProtoSerDesTest
+
+--)Hadoop
+#)example
+$ hadoop jar cdh5-starter-*.jar protobuf.example.AddPerson target/persons.pbf
+$ hadoop jar cdh5-starter-*.jar protobuf.example.ListPeople target/persons.pbf

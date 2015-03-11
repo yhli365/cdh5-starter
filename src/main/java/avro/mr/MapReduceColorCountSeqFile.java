@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package avro;
+package avro.mr;
 
 import java.io.IOException;
 
@@ -48,7 +48,7 @@ import example.avro.User;
  * 
  * @link http://avro.apache.org/docs/current/mr.html
  */
-public class MapReduceColorCount2 extends Configured implements Tool {
+public class MapReduceColorCountSeqFile extends Configured implements Tool {
 
 	public static class ColorCountMapper extends
 			Mapper<AvroKey<Long>, AvroValue<User>, Text, IntWritable> {
@@ -90,7 +90,7 @@ public class MapReduceColorCount2 extends Configured implements Tool {
 		}
 
 		Job job = Job.getInstance(getConf());
-		job.setJarByClass(MapReduceColorCount2.class);
+		job.setJarByClass(MapReduceColorCountSeqFile.class);
 		job.setJobName("Color Count 2");
 
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
@@ -113,7 +113,7 @@ public class MapReduceColorCount2 extends Configured implements Tool {
 	}
 
 	public static void main(String[] args) throws Exception {
-		int res = ToolRunner.run(new MapReduceColorCount2(), args);
+		int res = ToolRunner.run(new MapReduceColorCountSeqFile(), args);
 		System.exit(res);
 	}
 

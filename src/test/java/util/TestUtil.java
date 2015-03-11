@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Random;
 
@@ -25,6 +26,10 @@ public class TestUtil {
 
 	public static String getTempDir() {
 		return "D:/ydata/tmp";
+	}
+
+	public static File getTempFile(String filename) {
+		return new File(getTempDir(), filename);
 	}
 
 	public static byte[] randBytes(int len) {
